@@ -49,6 +49,7 @@ router.post('/login', (req: Request, res: Response) => {
             console.log(usuario[0]);
             
             res.json({
+                ok: true,
                 userData: usuario[0]
             }
             );
@@ -206,6 +207,7 @@ router.post('/getAcuariosUser', (req: Request, res: Response) => {
             });
         } else {
             res.json({
+                ok: true,
                 userData: acuarios
             });
         }
@@ -371,6 +373,7 @@ router.post('/getAlimentoList', (req: Request, res: Response) => {
             });
         } else {
             res.json({
+                ok: true,
                 alimentoList: alimento
             });
         }
@@ -629,6 +632,7 @@ router.post('/addAlimento', (req: Request, res: Response) => {
             server.io.emit('alimentoList', 'se ha agregado un nuevo alimento');
 
             res.json({
+                ok: true,
                 alimentoList: alimento[1]
             });
         }
@@ -662,6 +666,7 @@ router.post('/deleteAlimento', (req: Request, res: Response) => {
             server.io.emit('alimentoList', 'se ha eliminado un alimento');
 
             res.json({
+                ok: true,
                 alimentoList: alimento[1]
             });
         }

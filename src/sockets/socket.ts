@@ -40,6 +40,7 @@ export const login = (cliente: Socket, io: socketIO.Server) => {
         const escPassword = MySQL.instance.cnn.escape(password);
 
         console.log(` password: ${password}`);
+   
 
         const query = `    
             SELECT u.user_id, a.idacuario, a.description nomacuario, u.nombre 
@@ -48,23 +49,23 @@ export const login = (cliente: Socket, io: socketIO.Server) => {
      `;
 
         MySQL.ejecutarQuery(query, (err: any, usuario: Object[]) => {
-            
-            if ( usuario ){
-                const query =` update usuario 
+
+            if (usuario) {
+                const query = ` update usuario 
                 set idsocket = '${cliente.id}' 
                 where user_id = ${usuario[0].user_id}; `;
-                
-                
-                MySQL.ejecutarQuery(query, (err: any, usuario: Object[]) => {});
+
+
+                MySQL.ejecutarQuery(query, (err: any, usuario: Object[]) => { });
 
                 callback({
                     userData: usuario[0]
                 });
             }
-            
-            else{
+
+            else {
                 console.log(`Error en credenciales para ${cliente.id}`);
-                
+
                 callback({
                     ok: false
                 });
@@ -97,7 +98,7 @@ export const addAlimento = (cliente: Socket, io: socketIO.Server) => {
 // Configurar un usuario
 export const configurarUsuario = (cliente:Socket, io: SocketIO.Server) =>{
     cliente.on('configurar-usuario',(payload: { nombre:string}, callback: Function)=>{
-    UsuariosConectados.actualizarNombre(cliente.id, payload.nombre);        
+    UsuariosConectados.actualizarNombre(cliente.id, payload.nombre);
     io.emit('usuarios-activos', UsuariosConectados.getLista());
 
         callback({
